@@ -66,7 +66,10 @@ $("selector").accion();
 ~~~
 
 
-## Selectores
+# Selectores
+
+* Puedes consultar: [https://www.w3schools.com/Jquery/jquery_selectors.asp](https://www.w3schools.com/Jquery/jquery_selectors.asp)
+
 
 > Recuerda que también puedes combinar selectores.
 
@@ -98,7 +101,7 @@ $("selector").accion();
 | elemento[atributo^='valor']") | $("a[href^='http://www.google.es/']") | todos los elementos de tipo a en los que el ese enlace de href empiece por la cadena indicada |
 
 
-### Métodos selectores para conjuntos de elementos (arrays, colecciones)
+## Métodos selectores para conjuntos de elementos (arrays, colecciones)
 
 | Método selector | Ejemplo | Selecciona del documento... |
 | -- | -- | -- |
@@ -163,7 +166,7 @@ $(function() {
 ~~~
 
 
-## Borrar
+## Borrar atributos
 
 Métodos de jQuery para eliminar el atributo del los elemento HTML seleccionado:  
 
@@ -191,10 +194,6 @@ $(function() {
 ~~~
 
 
-## Crear
-
-
-
 ## Añadir contenido, antes o después del que ya existe
 
 >Los métodos html () y text () se pueden usar para obtener y establecer el contenido de un elemento seleccionado. Sin embargo, cuando se utilizan estos métodos para configurar contenido, el contenido existente se pierde.
@@ -219,9 +218,12 @@ HTML:
 JS:
 ~~~
 $(function() {
+
 // OJO: Estos ejemplos deben entenderse como código aislado unos de otros.
 // Partimos siempre del contenido HTML de arriba donde el contenido del párrafo es: Hola.
 // (en realidad si este código fuera seguido, tras cada añadido, el elemento p tendria un contenido diferente, no solo el Hola).
+
+//-------------------------------------------
 
     $("#parrafo").append("Caracola"); 
     // SALIDA: Hola Caracola
@@ -240,13 +242,6 @@ $(function() {
 
 //-------------------------------------------
 
-
-//-------------------------------------------
-
-
-//-------------------------------------------
-
-
 });
 ~~~
 
@@ -254,8 +249,46 @@ $(function() {
 
 Los métodos append (), prepend (), before () y after () se pueden usar también para crear nuevos elementos.
 
+HTML:
 ~~~
-let nuevoElemento = $("<p></p>").text("Soy un parrafo nuevo creado con jQuery"); 
+<p id="parrafo">Hola</p>
+~~~
+JS:
+~~~
+$.function(){
+
+    // Crea un nuevo párrafo.
+    let nuevoElemento = $("<p></p>").text("Soy un parrafo nuevo creado con jQuery."); 
+
+    // Añade el nuevo parrafo a continuación del que ya estaba.
+    $("#parrafo").after(nuevoElemento); 
+}
+
+// SALIDA:
+// Hola
+// Soy un parrafo nuevo creado con jQuery.
+~~~
+
+
+# Manipulación de estilos CSS
+
+## Añadir y Quitar clases CSS
+
+| Método | ¿qué hace? |
+| -- | -- |
+| **addClass()** | agrega una o más clases a los elementos seleccionados. |
+| **removeClass()** | elimina una o más clases a los elementos seleccionados. |
+| **toogleClass()** | alterna entre agregar/eliminar una o más clases de los elementos seleccionados (si la clase existe para el elemento, se elimina, y si no existe, se agrega). Se suele usar con eventos (on/off con un botón por ejemplo). |
+
+~~~
+$.function(){
+
+    // Añade las clases CSS: .texto y .menu a todos los parrafos.
+    $("p").addClass("texto menu");
+
+    // Quita la clase .menu de todos los parrafos.
+    $("p").removeClass("menu");
+}
 ~~~
 
 
