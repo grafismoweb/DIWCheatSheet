@@ -195,11 +195,12 @@ $(function() {
 
 
 
-## Añadir contenido, antes o después del que ya existe.
+## Añadir contenido, antes o después del que ya existe
 
 >Los métodos html () y text () se pueden usar para obtener y establecer el contenido de un elemento seleccionado. Sin embargo, cuando se utilizan estos métodos para configurar contenido, el contenido existente se pierde.
 
-Métodos para **agregar nuevo contenido** a un elemento seleccionado **sin eliminar el contenido existente**:
+Métodos para **agregar nuevo contenido** a un elemento seleccionado **sin eliminar el contenido existente**. 
+Todos admiten etiquetas html:
 
 | Método | ¿qué hace? |
 | -- | -- |
@@ -207,3 +208,55 @@ Métodos para **agregar nuevo contenido** a un elemento seleccionado **sin elimi
 | **prepend()** | inserta contenido **delante del primer hijo** de los elementos seleccionados, será el primer hijo. El contenido se inserta **dentro del selector** es **hijo** del selector| 
 | **after()** | inserta contenido **detrás** de los elementos seleccionados. El contenido se inserta **fuera del selector** es **hermano** del selector| 
 | **before()** | inserta contenido **delante** de los elementos seleccionados. El contenido se inserta **fuera del selector** es **hermano** del selector| 
+
+
+### Ejemplos de cómo **Añadir** contenido, antes o después del que ya existe
+
+HTML:
+~~~
+<p id="parrafo">Hola</p>
+~~~
+JS:
+~~~
+$(function() {
+// OJO: Estos ejemplos deben entenderse como código aislado unos de otros.
+// Partimos siempre del contenido HTML de arriba donde el contenido del párrafo es: Hola.
+// (en realidad si este código fuera seguido, tras cada añadido, el elemento p tendria un contenido diferente, no solo el Hola).
+
+    $("#parrafo").append("Caracola"); 
+    // SALIDA: Hola Caracola
+
+//------------------------------------------
+
+    $("#parrafo").after("Caracola"); 
+    // SALIDA: Hola 
+    //         Caracola
+
+//-------------------------------------------
+
+    $("#parrafo").before("<b>Saludo:</b>")
+    // SALIDA: Saludo: // en negrita
+    //         Hola    // sin negrita
+
+//-------------------------------------------
+
+
+//-------------------------------------------
+
+
+//-------------------------------------------
+
+
+});
+~~~
+
+## Crear nuevos elementos y contenido
+
+Los métodos append (), prepend (), before () y after () se pueden usar también para crear nuevos elementos.
+
+~~~
+let nuevoElemento = $("<p></p>").text("Soy un parrafo nuevo creado con jQuery"); 
+~~~
+
+
+# ...archivo en elaboración (continuará)
