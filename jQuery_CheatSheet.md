@@ -82,6 +82,9 @@ $("selector").accion();
 | :first-child | $("p:first-child") | todos los p que sean primer hijo de sus padres |
 | :last-child | $("p:last-child") | todos los p que sean último hijo de sus padres |
 | :nth-child(n) | $("div:nth-child(2)") | todos los p que sean segundo (2) hijo de sus padres |
+| :only-child) | $("div:only-child") | todos los elementos que sean el único hijo del div |
+| elemento ~ hermano  | $("h3 ~ p") | los p que estén al mismo nivel que los h3 |
+| elemento + hermanoAdyacente | $("h3 + p") | los p que estén junto a un h3 y al mismo nivel que ese h3 |
 | padre > hijo | $("div > p") | todos los p que sean hijos directos de un div |
 | padre descendiente | $("div p") | todos los p descendientes de un div (directos o no) |
 | :eq(index) | $("ul li:eq(2)") | el tercer elemento de la lista (index empieza en 0) |
@@ -89,85 +92,73 @@ $("selector").accion();
 | [atributo] | $("src") | todos los elementos que tengan un atributo src |
 | :input | $(":input") | todos los elementos input |
 | :text | $(":text") | todos los elementos con el type="text" |
+| :enabled | $("input:enabled") | todos los elementos que estén activos |
+| :disabled | $("input:disabled") | todos los elementos que NO estén activos |
+| elemento[atributo='valor']") | $("a[href='http://www.google.es']") | todos los elementos de tipo a que tengan ese enlace en href |
+| elemento[atributo^='valor']") | $("a[href^='http://www.google.es/']") | todos los elementos de tipo a en los que el ese enlace de href empiece por la cadena indicada |
 
 
-## Obtener o Modificar
+### Métodos selectores para conjuntos de elementos (arrays, colecciones)
 
-Métodos de jQuery para obtener o establecer, el contenido y los atributos de los elementos HTML seleccionados:  
+| Método selector | Ejemplo | Selecciona del documento... |
+| -- | -- | -- |
+| find() | $($(".imagenes").find("img")[2]) | Selecciona hijos de un conjunto: la tercera imagen [2] de las imagenes con clase imágenes .imagenes. |
+| first() / last() | $(".miniaturas").first() | Selecciona el primer o último componente de un conjunto de elementos. |
+| each() | $(".miniaturas").each(function(index){ $(this)} | Itera por el conjunto de elementos seleccionado. En cada iteración el elemento actual se nombra con $(this). Podemos usar su index |
+| eq() | $(".miniaturas").eq(1) | Selecciona un elemento de un conjunto por su índice: el segundo elemento [1] que tenga la clase .miniaturas |
+| slice() | $(".miniaturas").slice(2,4) | Como eq pero para un conjunto de elementos en vez de uno, se define el inicio y el final: del tercer al quinto elemento [2,4] que tenga la clase .miniaturas |
 
-**text()** establece o devuelve el contenido de **texto** de los elementos seleccionados.  
-**html()** establece o devuelve el **contenido, incluido el marcado html** de los elementos seleccionados.  
-**val()** establece o devuelve el **valor de los campos de formulario** de los elementos seleccionados.  
-**attr()** establece o devuelve el valor de los **atributos** de los elementos seleccionados.   
+
+## Obtener, Sustituir o Añadir contenido/valor
+
+Métodos de jQuery para obtener el contenido o el valor de un elemento, sustituir el contenido o valor de un elemento, o añadir contenido o valor a un elemento que esté vacío.  
+
+| Método | Devolver | Sustituir o Añadir | ¿qué? |
+| -- | -- | -- | -- |
+| **text()** | text() | text(con parametro) | el **contenido de texto** de los elementos seleccionados |
+| **html()** | html() | html(con parametro) | el **contenido, incluido el marcado html** de los elementos seleccionados |
+| **val()** | val() | val(con parametro) | el **valor de los campos de formulario** de los elementos seleccionados |
+| **attr()** | attr("nombreAtributo") | attr("nombreAtributo", "nuevoValorAtributo") | el **valor del atributo pasado por parámetro** del elemento seleccionado |
 
 
-### text()
-> **text()** establece o devuelve el contenido de **texto** de los elementos seleccionados.  
-
-HTML
+### Ejemplos de cómo obtener, sustituir o añadir contenido (si no hay).
+HTML:
 ~~~
+<!-- .text() -->
 <div id="test">
-   <p>some text</p>
+   <p>esto es un texto</p>
 </div>
-~~~
-JS. Devuelve solo el texto del div, sin etiquetas html: hello!
-~~~
-$(function() {
-    $("#test").text("hello!");
-});
-~~~
 
+<!-- .html() -->
+<h2>
+  JQuery es <b>lo que toca</b>
+</h2>
 
-### html()
-> **html()** establece o devuelve el **contenido, incluido el marcado html** de los elementos seleccionados.  
-
-HTML
-~~~
-<p>
-  JQuery is <b>fun</b>
-</p>
-~~~
-JS Devuelve p: JQuery is <b>fun</b> (incluidas las etiquetas html).
-~~~
-$(function() {
-    var val = $("p").html();
-    alert(val);
-});
-~~~
-
-
-### val()
-> **val()** establece o devuelve el **valor de los campos de formulario** de los elementos seleccionados.  
-
-HTML. Formulario con un input con el texto: Hola.
-~~~
+<!-- .val() -->
 <input type="text" id="name" value="Hola">
+
+<!-- .attr() -->
+<a href="https://www.google.com/">Click aquí</a> 
 ~~~
-JS. Devuelve un alert con el texto Hola
+JS:
 ~~~
 $(function() {
-    alert($("#name").val());
-});
-~~~
 
+// .text()
+    $("#test").text(); // OBTIENE el texto contenido en el div #text.
+    $("#test").text("Buenos dias"); // SUSTITUYE el texto contenido en el div #text por el pasado entre los paréntesis.
 
-### attr()
-> **attr()** establece o devuelve el valor de los **atributos** de los elementos seleccionados.   
+// .html()
+    let variable1 = $("h2").html(); // OBTIENE: JQuery es <b>lo que toca</b> incluidas las etiquetas html.
+    let variable2 = $("h2").html(<ul><li>lista<li></ul>); // SUSTITUYE: el contenido del <h2> por una lista ordenada con un item; lista.
 
-HTML
-~~~
-<a href="https://www.google.com/">Click here</a> 
-~~~
-JS 1. Si pasamos 1 parámetros, obtenemos el valor del atributo href: https://www.google.com/
-~~~
-$(function() {
-    $("a").attr("href");
-});
-~~~
-JS 2. Si pasamos 2 parámetros, cambia el valor del atributo href, por el enlace que le hemos pasado como segundo parámetro, ahora nos llevará a http://www.jquery.com/
-~~~
-$(function() {
-    $("a").attr("href", "http://www.jquery.com");
+// .val()
+    let variable4 $("#name").val(); // OBTIENE: Hola, que es el contenido de dentro del input, su valor.
+    let variable5 $("#name").val("Buenos días"); // SUSTITUYE: el contenido de dentro del input, su valor, por Buenos días. Si el input estuviera vacío, lo añadiría.
+
+// .attr()
+    $("a").attr("href"); // OBTIENE: Con 1 parámetro devuelve el valor del atributo indicado en el parámetro; https://www.google.com/
+    $("a").attr("href", "http://www.jquery.com"); // SUSTITUYE: Con 2 parámetros cambia el valor del atributo href, por el enlace que le hemos pasado como segundo parámetro, ahora nos llevará a http://www.jquery.com/
 });
 ~~~
 
@@ -204,5 +195,15 @@ $(function() {
 
 
 
+## Añadir contenido, antes o después del que ya existe.
 
+>Los métodos html () y text () se pueden usar para obtener y establecer el contenido de un elemento seleccionado. Sin embargo, cuando se utilizan estos métodos para configurar contenido, el contenido existente se pierde.
 
+Métodos para **agregar nuevo contenido** a un elemento seleccionado **sin eliminar el contenido existente**:
+
+| Método | ¿qué hace? |
+| -- | -- |
+| **append()** | inserta contenido **detrás del último hijo** de los elementos seleccionados, será el último hijo. El contenido se inserta **dentro del selector** es **hijo** del selector|
+| **prepend()** | inserta contenido **delante del primer hijo** de los elementos seleccionados, será el primer hijo. El contenido se inserta **dentro del selector** es **hijo** del selector| 
+| **after()** | inserta contenido **detrás** de los elementos seleccionados. El contenido se inserta **fuera del selector** es **hermano** del selector| 
+| **before()** | inserta contenido **delante** de los elementos seleccionados. El contenido se inserta **fuera del selector** es **hermano** del selector| 
